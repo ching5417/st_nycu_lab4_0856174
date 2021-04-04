@@ -30,8 +30,9 @@ jobs:
         ./gradlew compileTestJava
         ./gradlew processTestResources
         ./gradlew testClasses
+  
   Test:
-
+    needs: Compile
     runs-on: ubuntu-latest
 
     steps:
@@ -45,7 +46,7 @@ jobs:
     - name: Test with Gradle
       run: ./gradlew test
   Assemble:
-
+    needs: [Compile, Test]
     runs-on: ubuntu-latest
 
     steps:
