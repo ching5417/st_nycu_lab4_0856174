@@ -47,7 +47,7 @@ jobs:
     - name: Test with Gradle
       run: ./gradlew test
     - name: upload artifact
-    - uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v2
       with:
         path: build/reports
 
@@ -69,6 +69,6 @@ jobs:
           ./gradlew jar
           ./gradlew assemble
     - name: upload artifact
-    - uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v2
       with:
         path: build/libs/*.jar
