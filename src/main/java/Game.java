@@ -1,16 +1,11 @@
 public class Game {
-    private String player1;
-    private String player2;
 
 
-    public Game(String player1, String player2){
-        this.player1 = player1;
-        this.player2 = player2;
-        validation();
+    public Game(){
     }
 
 
-    String getJudgment(){
+    String getJudgment(String player1, String player2){
         if(player1.equals(player2)){
             return "Draw!";
         }
@@ -23,8 +18,8 @@ public class Game {
     }
 
 
-    void validation(){
-        if(!(player1.equals("rock") || player1.equals("paper") || player1.equals("scissors")) || !(player2.equals("rock") || player2.equals("paper") || player2.equals("scissors")))
+    void validation(String input){
+        if(!(input.equals("rock") || input.equals("paper") || input.equals("scissors")))
             throw new IllegalArgumentException("You can only enter 'rock', 'paper' or 'scissors'!");
     }
 }

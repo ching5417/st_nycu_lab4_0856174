@@ -25,27 +25,36 @@ class GameTest {
     // invalid cases
     static Stream<Arguments> getInvalidParameters(){
         return Stream.of(
-                arguments("","","You can only enter 'rock', 'paper' or 'scissors'!"),
-                arguments("2021","0327", "You can only enter 'rock', 'paper' or 'scissors'!"),
-                arguments("rock", "EVERGREEN", "You can only enter 'rock', 'paper' or 'scissors'!"),
-                arguments("!?","paper", "You can only enter 'rock', 'paper' or 'scissors'!"),
-                arguments("","scissors", "You can only enter 'rock', 'paper' or 'scissors'!")
+                arguments("rock", true),
+                arguments("paper", true),
+                arguments("scissors",true),
+                arguments("20210327", false),
+                arguments("EVERGREEN", false),
+                arguments("\n", false),
+                arguments("", false)
         );
     }
 
     @ParameterizedTest(name="#{index} - Test with Argument: player1=\"{0}\", player2=\"{1}\"")
     @MethodSource("getValidParameters")
     void getJudgmentTest(String player1, String player2, String expected_result) {
-        Game game = new Game(player1, player2);
-        String actual_result = game.getJudgment();
+        Game game = new Game();
+        String actual_result = game.getJudgment(player1, player2);
         assertEquals(expected_result, actual_result);
     }
 
     @ParameterizedTest(name="#{index} - Test with Argument: player1=\"{0}\", player2=\"{1}\"")
     @MethodSource("getInvalidParameters")
-    void validationTest(String player1, String player2, String expected_exception) {
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> new Game(player1, player2));
-        String actual_exception = exception.getMessage();
-        assertTrue(actual_exception.contains(expected_exception));
+    void validationTest(String input, boolean is_val) {
+        Game game = new Game();
+        if(is_val){
+            assertDoesNotThrow(()->game.validation(input));
+        }
+        else{
+            String expected_exception = "You can only enter 'rock', 'paper' or 'scissors'!";
+            Exception exception = assertThrows(IllegalArgumentException.class, () -> game.validation(input));
+            String actual_exception = exception.getMessage();
+            assertTrue(actual_exception.contains(expected_exception));
+        }
     }
 }
